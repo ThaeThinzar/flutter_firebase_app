@@ -192,6 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                               "fname":result.user.displayName,
                               "email":result.user.email,
                             });
+                            Toast.show("Success", context,duration: Toast.LENGTH_LONG);
                             Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context)=> HomePage(
                               title: result.user.displayName +
