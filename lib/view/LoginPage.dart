@@ -150,11 +150,11 @@ class _LoginPageState extends State<LoginPage> {
                             })
                             .catchError((err){
                               Toast.show(err.toString(), context,duration: Toast.LENGTH_LONG);
-                              print("Error: "+ err);
+                              print("Error: "+ err.toString());
                         }))
                             .catchError((err) {
                               Toast.show(err.toString(), context,duration: Toast.LENGTH_LONG);
-                              print("Error: "+ err);
+                              print("Error: "+ err.toString());
                         });
                       }
                     },
