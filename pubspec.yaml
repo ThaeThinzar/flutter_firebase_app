@@ -26,6 +26,7 @@ dependencies:
   flutter_signin_button: ^0.2.8
   carousel_pro: ^0.0.13
   intl: ^0.15.8
+  firebase_messaging: ^4.0.0+1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -54,6 +55,10 @@ flutter:
     - assets/images/randb.png
     - assets/images/urban.jpg
     - assets/images/edm.jpg
+    - assets/images/bagan.jpg
+    - assets/images/baganover.jpg
+    - assets/images/mdy.jpg
+    - assets/images/yangon.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_app/view/HomePage.dart';
 import 'package:flutter_firebase_app/view/LoginPage.dart';
+import 'package:flutter_firebase_app/view/MessagingPage.dart';
 import 'package:flutter_firebase_app/view/MyHomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_firebase_app/view/RegisterPage.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(),
+      home: MessagePage(),
       routes: routes,
     );
   }
