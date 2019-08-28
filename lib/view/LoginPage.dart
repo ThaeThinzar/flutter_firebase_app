@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
+          child: SingleChildScrollView(
           child: Form(
             key: _loginFormKey,
             child: Column(
@@ -144,9 +144,11 @@ class _LoginPageState extends State<LoginPage> {
                                 MaterialPageRoute(
                                     builder: (context) => HomePage(
                                       title: result["fname"] +
-                                          "'s Tasks",
+                                          "'s Home",
                                       uid: currentUser.user.uid,
-                                    )))
+                                    )
+                                )
+                            )
                             })
                             .catchError((err){
                               Toast.show(err.toString(), context,duration: Toast.LENGTH_LONG);
@@ -190,13 +192,13 @@ class _LoginPageState extends State<LoginPage> {
                             .setData({
                               "uid": result.user.uid,
                               "fname":result.user.displayName,
-                              "email":result.user.email,
+                              "email":result.user.email
                             });
                             Toast.show("Success", context,duration: Toast.LENGTH_LONG);
                             Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context)=> HomePage(
                               title: result.user.displayName +
-                                  "'s Tasks",
+                                  "'s Home",
                               uid: result.user.uid,
                             )));
                           })

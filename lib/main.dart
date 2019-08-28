@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MessagePage(),
+      home: SplashScreen(),
       routes: routes,
     );
   }

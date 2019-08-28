@@ -98,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                InkWell(
                  onTap: () {
-                   _selectDate(context);
+                   _pickedDate(context);
                  },
                  child: IgnorePointer(
                    child: new TextFormField(
@@ -254,7 +254,7 @@ class _RegisterPageState extends State<RegisterPage> {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
-  Future<String> _selectDate(BuildContext context) async {
+  Future<String> _pickedDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,

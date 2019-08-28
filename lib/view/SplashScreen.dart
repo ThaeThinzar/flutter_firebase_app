@@ -48,7 +48,7 @@ class SplashSceenState extends State<SplashScreen> {
                       ))))
               .catchError((err) => print(err))
         }
-    }).catchError((err)=> print(err));
+      }).catchError((err)=> print(err));
     super.initState();
     loadData();
   }

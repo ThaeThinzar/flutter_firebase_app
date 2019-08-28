@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase_app/Helpers//CustomCard.dart';
+import 'package:flutter_firebase_app/view/NewFeed.dart';
+import 'package:toast/toast.dart';
+
+import 'ProfilePage.dart';
 
 class HomePage extends StatefulWidget{
   HomePage({Key key, this.title, this.uid}) : super(key: key); //update this to include the uid in the constructor
@@ -14,6 +18,7 @@ class HomePage extends StatefulWidget{
 
 }
 class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
   TextEditingController taskTitleInputController;
   TextEditingController taskDescripInputController;
   FirebaseUser currentUser;
@@ -49,7 +54,8 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Center(
+      body:NewFeed(),
+      /* Center(
         child: Container(
             padding: const EdgeInsets.all(20.0),
             child: StreamBuilder<QuerySnapshot>(
@@ -78,12 +84,30 @@ class _HomePageState extends State<HomePage> {
                 }
               },
             )),
+      ),*/
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: onTabTapped,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contact_mail),
+            title: Text('Friends')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Profile')
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
+     /* floatingActionButton: FloatingActionButton(
         onPressed: _showDialog,
         tooltip: 'Add',
         child: Icon(Icons.add),
-      ),
+      ),*/
     );
   }
 
@@ -143,4 +167,20 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  void onTabTapped(int index) {
+    setState(() {
+      currentIndex = index;
+      if(currentIndex == 1){
+
+        Toast.show('You clicked index $currentIndex', context,duration: Toast.LENGTH_LONG);
+
+      } else if(currentIndex == 2) {
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> ProfilePage()));
+        Toast.show('You clicked index $currentIndex', context,duration: Toast.LENGTH_LONG);
+
+      }
+    });
+  }
+
 }
