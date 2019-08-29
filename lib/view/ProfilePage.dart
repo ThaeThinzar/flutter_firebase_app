@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_app/Helpers/Constants.dart' as prefix0;
 import 'package:flutter_firebase_app/Models/User.dart';
 import 'package:toast/toast.dart';
+import 'package:path/path.dart';
+import 'package:intl/intl.dart';
 
 
 class ProfilePage extends StatefulWidget {
@@ -27,7 +29,9 @@ class ProfilePageState extends State<ProfilePage> {
   TextEditingController phoneInputController;
   TextEditingController addressInputController;
   User profile = new User();
-
+  final format = DateFormat("dd/MM/yyyy");
+  DateTime selectedDate = DateTime.now();
+  String  _date ;
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
@@ -66,7 +70,13 @@ class ProfilePageState extends State<ProfilePage> {
                 Container(
                   child:  IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: (){_asyncInputDialog(context,name,);},
+                    onPressed: (){
+                      if(name.contains('/')){
+                        _pickedDate(context);
+                      } else {
+                        _asyncInputDialog(context,name,);
+                      }
+                      },
                   ),
                 )
 
@@ -152,6 +162,25 @@ class ProfilePageState extends State<ProfilePage> {
                                     createProfileField(profile.uid != null?snapshot.data.documents[profile.uid]['email']:'Loading...',Icons.alternate_email, emailInputController),
                                     Divider(height: 5, color:Colors.grey ),
                                     createProfileField(profile.uid!=null? snapshot.data.documents[profile.uid]['dob']:'Loading...',Icons.calendar_today, phoneInputController),
+                                    /*InkWell(
+                                      onTap: () {
+                                        _pickedDate(context);
+                                      },
+                                      child: IgnorePointer(
+                                        child: Row(
+                                          children: <Widget>[
+                                            new TextFormField(
+                                              decoration: InputDecoration(
+                                                  labelText: _date?? 'Date of birth '
+                                              ),
+                                              onSaved: (String dob){},
+                                              controller: phoneInputController,
+                                              keyboardType:TextInputType.datetime,
+                                            ),
+                                          ],
+                                        )
+                                      ),
+                                    ),*/
                                     Divider(height: 5, color:Colors.grey ),
                                     createProfileField('No.parami, torkj, jgkdjsgj',Icons.home, addressInputController),
                                     SizedBox(height:10)
@@ -176,82 +205,6 @@ class ProfilePageState extends State<ProfilePage> {
 
 
     );
-   /* return Scaffold(
-      backgroundColor: Colors.white70,
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: Builder(
-        builder: (context)=> Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 20.0,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Color(0xff476cfb),
-                      child: ClipOval(
-                        child: new SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: (profileImage!=null)? Image.file(
-                              profileImage,
-                              fit: BoxFit.fill,
-                            ):Image.asset('assets/images/bagan.jpg',fit: BoxFit.cover,)
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    *//*IconButton(
-                      icon: Icon(Icons.camera_alt),
-                      iconSize: 30,
-                      onPressed: (){
-                        getImage();
-                      },
-                    )*//*
-                  ],
-                ),
-                Container(
-                  margin:EdgeInsets.all(8),
-                  child:Card(
-                      child: Column(
-                        children: <Widget>[
-                          createProfileField('Khaing',Icons.person, nameInputcontroller),
-                          Divider(height: 5, color:Colors.grey ),
-                          createProfileField('ttks154@gmail.com',Icons.alternate_email, emailInputController),
-                          Divider(height: 5, color:Colors.grey ),
-                          createProfileField('0946314852',Icons.add_call, phoneInputController),
-                          Divider(height: 5, color:Colors.grey ),
-                          createProfileField('No.parami, torkj, jgkdjsgj',Icons.home, addressInputController),
-                          SizedBox(height:10)
-                        ],
-                      ),
-                      color:Colors.white
-                  )
-                ),
-                Container(
-                  margin: EdgeInsets.all(16),
-                  width: MediaQuery.of(context).size.width,
-                  child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      child: Text('Edit'),
-                      onPressed:(){null;}
-                  ),
-
-                )
-              ],
-            )
-        ),
-      )
-    );*/
   }
 
   Future<void> _ackAlert(BuildContext context) {
@@ -327,6 +280,16 @@ class ProfilePageState extends State<ProfilePage> {
     return ref;
   }
 
-
-
+  Future<String> _pickedDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2100));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        _date = format.format(selectedDate);
+      });
+  }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_firebase_app/Helpers//CustomCard.dart';
 import 'package:flutter_firebase_app/view/NewFeed.dart';
 import 'package:toast/toast.dart';
 
+import 'ContactList.dart';
 import 'ProfilePage.dart';
 
 class HomePage extends StatefulWidget{
@@ -172,7 +173,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       currentIndex = index;
       if(currentIndex == 1){
-
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> ContactList()));
         Toast.show('You clicked index $currentIndex', context,duration: Toast.LENGTH_LONG);
 
       } else if(currentIndex == 2) {
