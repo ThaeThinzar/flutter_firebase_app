@@ -1,10 +1,17 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_app/Helpers/Constants.dart' as prefix0;
+import 'package:flutter_firebase_app/Models/User.dart';
 import 'package:toast/toast.dart';
 
 
 class ProfilePage extends StatefulWidget {
+  final String uid;
+
+  const ProfilePage({Key key, this.uid}) : super(key: key);
   @override
   ProfilePageState createState() {
     return ProfilePageState();
@@ -19,7 +26,14 @@ class ProfilePageState extends State<ProfilePage> {
   TextEditingController nameInputcontroller;
   TextEditingController phoneInputController;
   TextEditingController addressInputController;
+  User profile = new User();
 
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+  // getUserDoc();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -75,7 +89,94 @@ class ProfilePageState extends State<ProfilePage> {
       );
     }
 
-    return Scaffold(
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('users').snapshots(),
+      builder: (context,snapshot) {
+
+        if(!snapshot.hasData){
+          return Text('Loading data please wait ...');
+        } else {
+          getUserDoc(snapshot.data.documents);
+        }
+        return Scaffold(
+          appBar: AppBar(title: Text('Profile'),),
+          backgroundColor: Colors.grey,
+          body: new ListView(
+            children: <Widget>[
+              Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20.0,
+                    ),
+
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Color(0xff476cfb),
+                          child: ClipOval(
+                            child: new SizedBox(
+                                width: 100,
+                                height: 100,
+                                child: (profileImage!=null)? Image.file(
+                                  profileImage,
+                                  fit: BoxFit.fill,
+                                ):Image.asset('assets/images/bagan.jpg',fit: BoxFit.cover,)
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(16),
+                          width: MediaQuery.of(context).size.width,
+                          child: RaisedButton(
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              child: Text('Upload Profile'),
+                              onPressed:(){null;}
+                          ),
+                        ),
+                        Container(
+
+                            margin:EdgeInsets.all(8),
+                            child:Card(
+                                child: Column(
+                                  children: <Widget>[
+                                    createProfileField( profile.uid != null ?snapshot.data.documents[profile.uid]['fname']: 'Loading....',Icons.person, nameInputcontroller),
+                                    Divider(height: 5, color:Colors.grey ),
+                                    createProfileField(profile.uid != null?snapshot.data.documents[profile.uid]['email']:'Loading...',Icons.alternate_email, emailInputController),
+                                    Divider(height: 5, color:Colors.grey ),
+                                    createProfileField(profile.uid!=null? snapshot.data.documents[profile.uid]['dob']:'Loading...',Icons.calendar_today, phoneInputController),
+                                    Divider(height: 5, color:Colors.grey ),
+                                    createProfileField('No.parami, torkj, jgkdjsgj',Icons.home, addressInputController),
+                                    SizedBox(height:10)
+                                  ],
+                                ),
+                                color:Colors.white
+                            )
+                        ),
+
+                      ],
+
+
+                    )
+                  ],
+
+                ),
+              )
+            ],
+          ),
+        );
+      },
+
+
+    );
+   /* return Scaffold(
       backgroundColor: Colors.white70,
       appBar: AppBar(
         title: Text('Profile'),
@@ -108,13 +209,13 @@ class ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 20,
                     ),
-                    /*IconButton(
+                    *//*IconButton(
                       icon: Icon(Icons.camera_alt),
                       iconSize: 30,
                       onPressed: (){
                         getImage();
                       },
-                    )*/
+                    )*//*
                   ],
                 ),
                 Container(
@@ -122,13 +223,13 @@ class ProfilePageState extends State<ProfilePage> {
                   child:Card(
                       child: Column(
                         children: <Widget>[
-                          createProfileField('Kaing',Icons.person, nameInputcontroller),
+                          createProfileField('Khaing',Icons.person, nameInputcontroller),
                           Divider(height: 5, color:Colors.grey ),
                           createProfileField('ttks154@gmail.com',Icons.alternate_email, emailInputController),
                           Divider(height: 5, color:Colors.grey ),
                           createProfileField('0946314852',Icons.add_call, phoneInputController),
                           Divider(height: 5, color:Colors.grey ),
-                          createProfileField('No.paremi, torkj, jgkdjsgj',Icons.home, addressInputController),
+                          createProfileField('No.parami, torkj, jgkdjsgj',Icons.home, addressInputController),
                           SizedBox(height:10)
                         ],
                       ),
@@ -142,7 +243,7 @@ class ProfilePageState extends State<ProfilePage> {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: Text('Edit'),
-                      onPressed:(){_asyncInputDialog(context);}
+                      onPressed:(){null;}
                   ),
 
                 )
@@ -150,7 +251,7 @@ class ProfilePageState extends State<ProfilePage> {
             )
         ),
       )
-    );
+    );*/
   }
 
   Future<void> _ackAlert(BuildContext context) {
@@ -172,6 +273,8 @@ class ProfilePageState extends State<ProfilePage> {
       },
     );
   }
+
+
   Future<String> _asyncInputDialog(BuildContext context,String category) async {
     String teamName = '';
     return showDialog<String>(
@@ -205,4 +308,25 @@ class ProfilePageState extends State<ProfilePage> {
       },
     );
   }
+
+  Future<DocumentReference> getUserDoc(List<DocumentSnapshot> userDocument) async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final Firestore _firestore = Firestore.instance;
+
+    FirebaseUser user = await _auth.currentUser();
+    DocumentReference ref = _firestore.collection('users').document(user.uid);
+    String uid;
+    uid = user.uid;
+    for( int i =0; i<userDocument.length;i++){
+      String docuid = userDocument[i].data['uid'];
+      if(uid == userDocument[i].data['uid']){
+        profile.uid = i;
+      }
+    }
+    print ("ref;: "+ ref.toString());
+    return ref;
+  }
+
+
+
 }

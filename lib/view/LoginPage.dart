@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_firebase_app/Helpers/Constants.dart';
 import 'package:flutter_firebase_app/Helpers/Util.dart';
+import 'package:flutter_firebase_app/Models/User.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -24,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
-
+  User profileuser = new User();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   bool isLoggedIn;
@@ -138,7 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                             .document(currentUser.user.uid)
                             .get()
                             .then((DocumentSnapshot result) =>{
-                            Toast.show("Login Success",context,duration: Toast.LENGTH_LONG),
+                            print('userid : $profileuser'),
+                            Toast.show("Login Success $profileuser",context,duration: Toast.LENGTH_LONG),
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
