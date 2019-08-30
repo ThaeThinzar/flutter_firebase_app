@@ -14,7 +14,7 @@ class CustomCard extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5.0),
             child: Column(
               children: <Widget>[
-                Text(title),
+                Text(title,style:TextStyle(color: Colors.black) ,),
                 FlatButton(
                     child: Text("See More"),
                     onPressed: () {

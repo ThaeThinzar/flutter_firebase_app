@@ -33,6 +33,7 @@ dependencies:
   flutter_datetime_picker: 1.2.5
   datetime_picker_formfield: ^0.4.2
   url_launcher: ^5.1.2
+  flutter_bloc: ^0.8.0
 
 dev_dependencies:
   flutter_test:

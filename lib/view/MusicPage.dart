@@ -17,7 +17,7 @@ class MusicPage extends StatefulWidget {
 }
 
 class MusicPageState extends State<MusicPage>{
-  var blueColor = Color(0xFF090e42);
+  var blueColor = Colors.blueGrey;
   var pinkColor = Color(0xFFff6b80);
   _launchURL(String url) async {
     // url = urlLink;
@@ -76,7 +76,7 @@ class MusicPageState extends State<MusicPage>{
           SongItem(context, '2019 Winner', 'OG', 'https://www.hotspawn.com/app/uploads/2019/08/og_ti9_winners-1024x683.jpeg','https://www.hotspawn.com/og-ti-2019-winners/'),
           SongItem(context,'Success Life ','Billie Eilish ','https://www.startamomblog.com/wp-content/uploads/2018/08/12-successful-lifestyle-blogs-ideas-startamomblog.com-fi.png', 'https://www.startamomblog.com/what-is-a-lifestyle-blog/'),
           SongItem(context, 'Sport Channel', 'Tommy Robin ', 'http://www.secsportsfan.com/images/best-all-time.jpg','https://www.thebestsportsblog.com/top-sports-blogs.html'),
-          SongItem(context, 'Fitness & Fashion  ', 'STommy Samm', 'https://charts-static.billboard.com/img/2019/06/shawn-mendes-drf-senorita-j21-87x87.jpg','https://mediakix.com/blog/fabletics-influencer-marketing-case-study-instagram/'),
+          SongItem(context, 'Fashion  ', 'STommy Samm', 'https://charts-static.billboard.com/img/2019/06/shawn-mendes-drf-senorita-j21-87x87.jpg','https://mediakix.com/blog/fabletics-influencer-marketing-case-study-instagram/'),
 
 
 
@@ -226,7 +226,7 @@ class CustomTextField extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                   hintText: 'Search category...',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: TextStyle(color: Colors.white),
                   border: InputBorder.none),
             ),
           ),
