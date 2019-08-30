@@ -57,8 +57,8 @@ class _NewFeedState extends State<NewFeed> {
 
         backgroundColor: Colors.blueGrey,
 
-       /* appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
+        appBar: AppBar(
+          backgroundColor: Colors.green,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white,),
             onPressed: () => Navigator.pop(context, false),
@@ -106,7 +106,7 @@ class _NewFeedState extends State<NewFeed> {
               ),
             )
           ],
-        ),*/
+        ),
         body: _buildList(context)
 
       ),

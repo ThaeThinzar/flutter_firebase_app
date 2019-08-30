@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase_app/Helpers//CustomCard.dart';
+import 'package:flutter_firebase_app/view/MyHomePage.dart';
 import 'package:flutter_firebase_app/view/NewFeed.dart';
 import 'package:toast/toast.dart';
 
 import 'ContactList.dart';
+import 'MusicPage.dart';
 import 'ProfilePage.dart';
 
 class HomePage extends StatefulWidget{
@@ -55,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body:NewFeed(),
+      body:MusicPage(0xff46565e),
       /* Center(
         child: Container(
             padding: const EdgeInsets.all(20.0),
@@ -88,11 +90,16 @@ class _HomePageState extends State<HomePage> {
       ),*/
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
+        type: BottomNavigationBarType.fixed,
         onTap: onTabTapped,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             title: Text('Home')
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.view_list),
+              title: Text('Tasks')
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contact_mail),
@@ -101,7 +108,8 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             title: Text('Profile')
-          )
+          ),
+
         ],
       ),
      /* floatingActionButton: FloatingActionButton(
@@ -173,13 +181,17 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       currentIndex = index;
       if(currentIndex == 1){
-        Navigator.push(context,MaterialPageRoute(builder: (context)=> ContactList()));
+
         Toast.show('You clicked index $currentIndex', context,duration: Toast.LENGTH_LONG);
 
       } else if(currentIndex == 2) {
-        Navigator.push(context,MaterialPageRoute(builder: (context)=> ProfilePage()));
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> ContactList()));
         Toast.show('You clicked index $currentIndex', context,duration: Toast.LENGTH_LONG);
 
+      } else if(currentIndex == 3) {
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> ProfilePage()));
+      } else if (currentIndex == 0) {
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> NewFeed()));
       }
     });
   }

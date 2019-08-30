@@ -24,6 +24,7 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
 
   File profileImage; // to save uploaded pic
+  File imageFile;
   TextEditingController emailInputController;
   TextEditingController nameInputcontroller;
   TextEditingController phoneInputController;
@@ -38,6 +39,15 @@ class ProfilePageState extends State<ProfilePage> {
   void initState() {
   // getUserDoc();
   }
+//To open the gallery
+/*  Future pickImageFromGallery() async {
+   await ImagePicker.pickImage(source: ImageSource.gallery).then((image){
+     setState(() {
+       imageFile = image;
+     });
+   });
+  }*/
+
   @override
   Widget build(BuildContext context) {
 
@@ -138,6 +148,7 @@ class ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         ),
+
                         SizedBox(
                           height: 20,
                         ),

@@ -141,7 +141,12 @@ class Msg extends StatelessWidget {
           children: <Widget>[
             new Container(
               margin: const EdgeInsets.only(right: 18.0),
-              child: new CircleAvatar(child: new Text(defaultUserName)),
+              child: new CircleAvatar(child: new
+              Text(
+                  defaultUserName,
+                  style: TextStyle(fontSize: 10)
+              ),
+              ),
             ),
             new Expanded(
               child: new Column(

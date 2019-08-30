@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'MusicPlayer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MusicPage extends StatefulWidget {
   int color;
@@ -18,6 +19,14 @@ class MusicPage extends StatefulWidget {
 class MusicPageState extends State<MusicPage>{
   var blueColor = Color(0xFF090e42);
   var pinkColor = Color(0xFFff6b80);
+  _launchURL(String url) async {
+    // url = urlLink;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,21 +47,21 @@ class MusicPageState extends State<MusicPage>{
           SizedBox (height: 16,),
           Row(
             children: <Widget>[
-              ItemCard('assets/images/hiphop.jpg', 'Hip Hop'),
+              ItemCard('assets/images/lifestyle.png', 'Life Style'),
               SizedBox(
                 width: 16.0,
               ),
-              ItemCard('assets/images/randb.png', 'R & B'),
+              ItemCard('assets/images/bagan.jpg', 'Travel'),
             ],
           ),
           SizedBox (height: 32,),
           Row(
             children: <Widget>[
-              ItemCard('assets/images/urban.jpg', 'Hip Hop'),
+              ItemCard('assets/images/sport.jpg', 'Sports'),
               SizedBox(
                 width: 16.0,
               ),
-              ItemCard('assets/images/edm.jpg', 'R & B'),
+              ItemCard('assets/images/edm.jpg', 'Relax'),
             ],
           ),
           SizedBox(height: 32,),
@@ -64,11 +73,12 @@ class MusicPageState extends State<MusicPage>{
                 fontSize: 30.0),
           ),
           SizedBox(height: 16.0,),
-          SongItem(context,'IBad Guy ','Billie Eilish ','https://charts-static.billboard.com/img/2019/04/billie-eilish-1e3-bad-guy-g9n-87x87.jpg'),
-          SongItem(context, 'Senorita ', 'Shawn Mendes & Camila Cabello', 'https://charts-static.billboard.com/img/2019/06/shawn-mendes-drf-senorita-j21-87x87.jpg'),
-          SongItem(context, '7 Rings', 'Ariana Grande ', 'https://charts-static.billboard.com/img/2019/01/ariana-grande-ypy-7-rings-8ag-87x87.jpg'),
-          SongItem(context, 'Sweet but Psycho', 'Ava Max', 'https://charts-static.billboard.com/img/2018/11/ava-max-k5u-sweet-but-psycho-suq-87x87.jpg'),
-          SongItem(context, 'Me!', 'TaylorSwift', 'https://charts-static.billboard.com/img/2019/05/taylor-swift-p7u-me-ffx-87x87.jpg'),
+          SongItem(context, '2019 Winner', 'OG', 'https://www.hotspawn.com/app/uploads/2019/08/og_ti9_winners-1024x683.jpeg','https://www.hotspawn.com/og-ti-2019-winners/'),
+          SongItem(context,'Success Life ','Billie Eilish ','https://www.startamomblog.com/wp-content/uploads/2018/08/12-successful-lifestyle-blogs-ideas-startamomblog.com-fi.png', 'https://www.startamomblog.com/what-is-a-lifestyle-blog/'),
+          SongItem(context, 'Sport Channel', 'Tommy Robin ', 'http://www.secsportsfan.com/images/best-all-time.jpg','https://www.thebestsportsblog.com/top-sports-blogs.html'),
+          SongItem(context, 'Fitness & Fashion  ', 'STommy Samm', 'https://charts-static.billboard.com/img/2019/06/shawn-mendes-drf-senorita-j21-87x87.jpg','https://mediakix.com/blog/fabletics-influencer-marketing-case-study-instagram/'),
+
+
 
 
         ],
@@ -77,10 +87,11 @@ class MusicPageState extends State<MusicPage>{
     );
   }
 
-  Widget SongItem(BuildContext context,String title, String artist, String image){
+  Widget SongItem(BuildContext context,String title, String artist, String image,String url){
     return GestureDetector(
       onTap: (){
-        Navigator.push(context,MaterialPageRoute(builder: (context)=>MusicPlayer(title,artist,image)));
+        _launchURL(url);
+       // Navigator.push(context,MaterialPageRoute(builder: (context)=>MusicPlayer(title,artist,image)));
       },
       child: Padding(padding: const EdgeInsets.only(bottom: 26),
       child: Row(
@@ -214,7 +225,7 @@ class CustomTextField extends StatelessWidget {
           Expanded(
             child: TextField(
               decoration: InputDecoration(
-                  hintText: 'Search music...',
+                  hintText: 'Search category...',
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none),
             ),

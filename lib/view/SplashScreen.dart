@@ -43,7 +43,7 @@ class SplashSceenState extends State<SplashScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => HomePage(
-                        title: result["fname"] + "'s Tasks",
+                        title: result["fname"] + "'s Home",
                         uid: currentUser.uid,
                       ))))
               .catchError((err) => print(err))
